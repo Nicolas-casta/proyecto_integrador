@@ -1,0 +1,32 @@
+# Este archivo le dice a Docker qué "cajas" crear
+
+services:
+  # Nombre del servicio
+  mysql:
+    # Qué imagen de MySQL usar (versión 8.0)
+    image: mysql:8.0
+
+    # Nombre del contenedor (la "caja")
+    container_name: biblioteca_mysql
+
+    # Variables de configuración de MySQL
+    environment:
+      # Nombre de la base de datos que se creará automáticamente
+      MYSQL_DATABASE: biblioteca_virtual
+
+      # Contraseña del usuario root
+      MYSQL_ROOT_PASSWORD: ncastano123
+
+    ports:
+      - "3307:3306"
+
+    # Donde se guardan los datos
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+    # Comando extra para evitar problemas de autenticación
+    command: --default-authentication-plugin=mysql_native_password
+
+# Definir el volumen para guardar datos
+volumes:
+  mysql_data:
